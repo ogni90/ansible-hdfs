@@ -1,6 +1,42 @@
 <configuration>
-  <property>
+ <!-- <property>
     <name>mapred.job.tracker</name>
     <value>{{ hdfs_namenodes[0] }}:8021</value>
-  </property>
+  </property> -->
+    <property>
+            <name>mapreduce.framework.name</name>
+            <value>yarn</value>
+    </property>
+    <property>
+            <name>yarn.app.mapreduce.am.env</name>
+            <value>HADOOP_MAPRED_HOME=/usr/local/hadoop</value>
+    </property>
+    <property>
+            <name>mapreduce.map.env</name>
+            <value>HADOOP_MAPRED_HOME=/usr/local/hadoop</value>
+    </property>
+    <property>
+            <name>mapreduce.reduce.env</name>
+            <value>HADOOP_MAPRED_HOME=/usr/local/hadoop</value>
+    </property>
+
+    <property>
+        <name>mapreduce.application.classpath</name>
+        <value>/usr/local/hadoop/share/hadoop/mapreduce/*,/usr/local/hadoop/share/hadoop/mapreduce/lib/*</value>
+    </property>
+
+    <property>
+            <name>yarn.app.mapreduce.am.resource.mb</name>
+            <value>1024</value>
+    </property>
+    
+    <property>
+            <name>mapreduce.map.memory.mb</name>
+            <value>512</value>
+    </property>
+    
+    <property>
+            <name>mapreduce.reduce.memory.mb</name>
+            <value>512</value>
+    </property>
 </configuration>

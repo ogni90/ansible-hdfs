@@ -1,0 +1,25 @@
+[Unit]
+Description=YARN {{ program }}
+After=ssh.service
+
+[Service]
+Environment=YARN_CONF_DIR=/usr/local/hadoop/etc/hadoop
+Environment=HADOOP_YARN_HOME=/usr/local/hadoop
+Type=oneshot
+User={{hdfs_user}}
+Group={{hdfs_group}}
+{% if program == "resourcemanager" %}
+ExecStart={{ hdfs_hadoop_home }}/sbin/yarn-daemon.sh --config {{ hdfs_conf_dir }} start {{ program }}
+ExecStop={{ hdfs_hadoop_home }}/sbin/yarn-daemon.sh --config {{ hdfs_conf_dir }} stop {{ program }}
+{% else %}
+ExecStart={{ hdfs_hadoop_home }}/sbin/yarn-daemons.sh --config {{ hdfs_conf_dir }} start {{ program }}
+ExecStop={{ hdfs_hadoop_home }}/sbin/yarn-daemons.sh --config {{ hdfs_conf_dir }} stop {{ program }}
+{% endif %}
+RemainAfterExit=yes
+Restart=no
+PIDFile=/tmp/hadoop-yarn-{{program}}.pid
+
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target

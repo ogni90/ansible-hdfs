@@ -3,10 +3,22 @@
   systemd: daemon_reload=yes
   when: ansible_service_mgr == "systemd"
 
+- name: Restart yarn-nodemanager
+  service: name=yarn-nodemanager state=restarted
+  when:
+   - inventory_hostname in hdfs_namenodes[0]
+   - hdfs_ansible_handlers|bool
+
+- name: Restart yarn-resourcemanager
+  service: name=yarn-resourcemanager state=restarted
+  when:
+   - inventory_hostname in hdfs_namenodes[0]
+   - hdfs_ansible_handlers|bool
+
 - name: Restart namenode
   service: name=hdfs-namenode state=restarted
   when:
-   - inventory_hostname in hdfs_namenodes
+   - inventory_hostname in hdfs_namenodes[0]
    - hdfs_ansible_handlers|bool
 
 - name: Restart datanode
