@@ -33,6 +33,17 @@
   tags:
    - hdfs-site-config
 
+- name: Configure yarn-site.xml
+  template: src=yarn-site.xml.j2 dest={{hdfs_conf_dir}}/yarn-site.xml owner={{hdfs_user}} group={{hdfs_group}} mode=0755
+  notify:
+   - Restart namenode
+   - Restart secondary namenode
+   - Restart datanode
+   - Restart journalnode
+   - Restart zkfc
+  tags:
+   - hdfs-core-config
+
 - name: Configure log4j.properties
   template: src=log4j.properties.j2 dest={{hdfs_conf_dir}}/log4j.properties owner={{hdfs_user}} group={{hdfs_group}} mode=0755
   notify:
