@@ -41,6 +41,8 @@
    - Restart datanode
    - Restart journalnode
    - Restart zkfc
+   - Restart yarn-resourcemanager
+   - Restart yarn-nodemanager
   tags:
    - hdfs-core-config
 

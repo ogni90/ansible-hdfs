@@ -1,6 +1,14 @@
 ---
 - name: Configure mapred-site.xml
   template: src=mapred-site.xml.j2 dest="{{hdfs_conf_dir}}/mapred-site.xml" owner={{hdfs_user}} group={{hdfs_group}}
+  notify:
+  - Restart namenode
+  - Restart secondary namenode
+  - Restart datanode
+  - Restart journalnode
+  - Restart zkfc
+  - Restart yarn-resourcemanager
+  - Restart yarn-nodemanager
 
 - name: Configure slaves
   template: src=slaves.j2 dest="{{hdfs_conf_dir}}//slaves" owner={{hdfs_user}} group={{hdfs_group}} mode=0744

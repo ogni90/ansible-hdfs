@@ -31,4 +31,8 @@
             <name>yarn.nodemanager.vmem-check-enabled</name>
             <value>false</value>
     </property>
+    <property>
+            <name>yarn.nodemanager.local-dirs</name>
+            <value>{{ hdfs_yarn_dir_list | map('regex_replace', '^(.*)$', 'file://\\1' ) | join(',') }}</value>
+    </property>
 </configuration>
